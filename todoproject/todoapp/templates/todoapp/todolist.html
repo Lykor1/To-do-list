@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
+</head>
+<body>
+    <center><h1>Мой список задач</h1></center>
+    <h3>Добавить задачу:</h3>
+    <form action="/todolist/add/" method="post">
+        {% csrf_token %}
+        <input type="text" name="content">
+        <input type="date" name="date">
+        <input type="time" name="time">
+        <input type="submit" value="Добавить задачу">
+    </form>
+    <br>
+    <h3>Список задач:</h3>
+    <ul>
+        {% for item in all_items %}
+            <li>
+                <p>{{ item.content }}</p>
+                <small>{{ item.date }}</small>
+                <small>{{ item.time }}</small>
+            </li>
+            <form method="post" action="/todolist/delete/{{ item.id }}">
+                {% csrf_token %}
+                <input type="submit" value="Удалить">
+            </form>
+        {% endfor %}
+    </ul>
+</body>
+</html>
